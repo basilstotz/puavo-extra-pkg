@@ -1,0 +1,42 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "$upstream_dir/opt/lumi" /opt/lumi
+    ln -fns "$upstream_dir/lumi.jpeg" /usr/share/icons/lumi.jpeg
+    cat <<EOF > /usr/share/applications/lumi.desktop
+[Desktop Entry]
+Name=Lumi H5P
+Exec=/opt/lumi/Lumi.AppImage
+Type=Application
+Terminal=false
+Icon=/usr/share/icons/lumi.jpeg
+StartupNotify=true
+
+Categories=Education;
+EOF
+    ;;
+  unconfigure)
+    rm -f /opt/lumi \
+          /usr/share/applications/lumi.desktop \
+          /usr/share/icons/lumi.jpeg
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    mkdir -p "$upstream_dir/opt/lumi"
+    cp -p "$upstream_pack" "${upstream_dir}/opt/lumi/Lumi.AppImage"
+    chmod 755 "${upstream_dir}/opt/lumi/Lumi.AppImage"
+    cp -p lumi.jpeg "$upstream_dir"
+    ;;
+  *)
+    ;;
+esac
