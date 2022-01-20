@@ -7,12 +7,6 @@ INSTALL_DATA = $(INSTALL) -m 644
 
 packagedirs  = lehreroffice
 packagedirs += onlyoffice
-packagedirs += leseschlau
-packagedirs += newworld
-packagedirs += sprachstarken
-packagedirs += blitzrechnen
-packagedirs += rechentraining
-packagedirs += rechentraining6
 packagedirs += lumi
 
 
