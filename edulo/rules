@@ -12,7 +12,7 @@ case "${command}" in
     ln -fns "${upstream_dir}/usr/bin/edulo" /usr/bin/edulo
     ln -fns "${upstream_dir}/usr/share/applications/edulo.desktop" /usr/share/applications/edulo.desktop
     ln -fns "${upstream_dir}/usr/share/lintian/overrides/edulo" /usr/share/lintian/overrides/edulo
-    ln -fns "${upstream_dir}/usr/share/pixmaps/edulo.png" /usr/share/pixmaps/endulo.png
+    ln -fns "${upstream_dir}/usr/share/pixmaps/edulo.png" /usr/share/pixmaps/edulo.png
     
     ;;
   unconfigure)
@@ -20,7 +20,7 @@ case "${command}" in
     rm -f /usr/bin/edulo
     rm -f /usr/share/applications/edulo.desktop
     rm -f /usr/share/lintian/overrides/edulo
-    rm -f  /usr/share/pixmaps/endulo.png
+    rm -f  /usr/share/pixmaps/edulo.png
     
     ;;
   unpack)

@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+    ln -fns "${upstream_dir}/usr/lib/learning-view" /usr/lib/learning-view
+    ln -fns "${upstream_dir}/usr/bin/learning-view" /usr/bin/learning-view
+    ln -fns "${upstream_dir}/usr/share/applications/learning-view.desktop" /usr/share/applications/learning-view.desktop
+    ln -fns "${upstream_dir}/usr/share/lintian/overrides/learning-view" /usr/share/lintian/overrides/learning-view
+    ln -fns "${upstream_dir}/usr/share/pixmaps/learning-view.png" /usr/share/pixmaps/learning-view.png
+    
+    ;;
+  unconfigure)
+    rm -f /usr/lib/learning-view
+    rm -f /usr/bin/learning-view
+    rm -f /usr/share/applications/learning-view.desktop
+    rm -f /usr/share/lintian/overrides/learning-view
+    rm -f  /usr/share/pixmaps/learning-view.png
+    
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    dpkg -x "$upstream_pack" "$upstream_dir"
+    ;;
+  *)
+    ;;
+esac

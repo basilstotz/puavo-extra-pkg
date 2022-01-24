@@ -10,6 +10,7 @@ packagedirs += onlyoffice
 packagedirs += lumi
 packagedirs += edulo
 packagedirs += sozi
+packagedirs += learningview
 
 
 packagefiles = $(patsubst %,%.tar.gz,${packagedirs})
