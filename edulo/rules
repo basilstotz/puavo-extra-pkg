@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+    ln -fns "${upstream_dir}/usr/lib/edulo" /usr/lib/edulo
+    ln -fns "${upstream_dir}/usr/bin/edulo" /usr/bin/edulo
+    ln -fns "${upstream_dir}/usr/share/applications/edulo.desktop" /usr/share/applications/edulo.desktop
+    ln -fns "${upstream_dir}/usr/share/lintian/overrides/edulo" /usr/share/lintian/overrides/edulo
+    ln -fns "${upstream_dir}/usr/share/pixmaps/edulo.png" /usr/share/pixmaps/endulo.png
+    
+    ;;
+  unconfigure)
+    rm -f /usr/lib/edulo
+    rm -f /usr/bin/edulo
+    rm -f /usr/share/applications/edulo.desktop
+    rm -f /usr/share/lintian/overrides/edulo
+    rm -f  /usr/share/pixmaps/endulo.png
+    
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    dpkg -x "$upstream_pack" "$upstream_dir"
+    ;;
+  *)
+    ;;
+esac

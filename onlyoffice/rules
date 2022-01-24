@@ -10,8 +10,8 @@ case "${command}" in
     upstream_dir=$1
     ln -fns "${upstream_dir}/opt/onlyoffice" /opt/onlyoffice
     ln -fns "${upstream_dir}/usr/bin/onlyoffice-desktopeditors" /usr/bin/onlyoffice-desktopeditors
-    ln -fns "${upstream_dir}/usr/share/applications/onlyoffice-desktop-editors.desktop" /usr/share/applications/onlyoffice-desktop-editors.desktop
-    ln -fns "${upstream_dir}/usr/bin/desktopeditors" /usr/bin/desktopeditors
+    ln -fns "${upstream_dir}/usr/share/applications/onlyoffice-desktopeditors.desktop" /usr/share/applications/onlyoffice-desktopeditors.desktop
+    ln -fns "${upstream_dir}/usr/bin/onlyoffice-desktopeditors" /usr/bin/onlyoffice-desktopeditors
     ln -fns "${upstream_dir}/opt/asc-de-48-png" /usr/share/pixmaps/onlyoffice-desktopeditors
     
     ;;

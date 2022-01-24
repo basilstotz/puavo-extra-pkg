@@ -1,4 +1,4 @@
-#prefix = /usr
+#prefix = /u
 prefix = .
 datarootdir = $(prefix)/share
 
@@ -9,7 +9,7 @@ packagedirs  = lehreroffice
 packagedirs += onlyoffice
 packagedirs += lumi
 packagedirs += edulo
-packagedirs += sozi
+packagedirs += szi
 
 
 packagefiles = $(patsubst %,%.tar.gz,${packagedirs})

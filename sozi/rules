@@ -1,0 +1,31 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+  configure)
+    upstream_dir=$1
+    ln -fns "${upstream_dir}/opt/Sozi" /opt/Sozi
+    ln -fns "${upstream_dir}/usr/bin/sozi" /usr/bin/sozi
+    ln -fns "${upstream_dir}/usr/share/applications/sozi.desktop" /usr/share/applications/sozi.desktop
+    ln -fns "${upstream_dir}/usr/share/pixmaps/sozi.png" /usr/share/pixmaps/sozi.png
+    
+    ;;
+  unconfigure)
+    rm -f /opt/Sozi
+    rm -f /usr/bin/sozi
+    rm -f /usr/share/applications/sozi.desktop
+    rm -f /usr/share/pixmaps/sozi.png
+    
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    dpkg -x "$upstream_pack" "$upstream_dir"
+    ;;
+  *)
+    ;;
+esac
