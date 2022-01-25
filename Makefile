@@ -11,6 +11,7 @@ packagedirs += lumi
 packagedirs += edulo
 packagedirs += sozi
 packagedirs += learningview
+packagedirs += telegram
 
 
 packagefiles = $(patsubst %,%.tar.gz,${packagedirs})
