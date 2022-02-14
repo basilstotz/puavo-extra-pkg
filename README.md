@@ -1,38 +1,79 @@
-# Puavo package installers
+# Puavo Extra Packages
 
-To build all installers, run:
+## joplin
 
-    make
+**Joplin** is a note-taking application. 
 
-The packages can be tested/installed with
+- Licence: MIT
+- URL: https://joplinapp.org
 
-    puavo-pkg install examplepkg.tar.gz
+## lumi
 
-# Updating the packages
+**Lumi Education**  is a desktop app to create, edit, view and share interactive H5P content (https://h5p.org).
 
-To update/remove packages according to specifications in puavo-conf, run:
+- Licence: AGPL-3.0
+- URL: https://lumi.education/
 
-    puavo-pkg-update
+## marktext
 
-It is possible to update/remove only one package by giving the package name
-as a command argument.
+**MarkText** is a WYSIWYG markdown editor (inspired by Typora).
 
-# Fixing the installers
+- License: MIT
+- URL: https://marktext.app/
 
-The installers download software from the internet and install them.
-Thus, we expect them to break from time to time.  We anticipate that the
-most common problem is that upstream changes URLs, or upstream pack contents
-change, meaning that checksums calculated from upstream packs also change.
 
-Note that not all packages use direct URLs or checksums... that is another
-source of possible problems, because versions in use may not match or old
-versions are not updated to later versions.  URLs and checksums are not
-used when it is known they change too rapidly (dropbox, google-chrome).
+## onlyoffice
 
-If URL needs fixing, ``upstream_pack_url`` contains the URL.  If
-checksum needs fixing, ``upstream_pack_md5sum`` contains the checksum.
-New URLs should be looked up from upstream.  On failed checksum checks,
-``puavo-pkg`` reports the expected checksum and the actual checksum.
-If the checksum needs an update, the situation should generally be
-examined on why it is so and the resulting package installation should
-be tested.
+**ONLYOFFICE** is a office suite for local or cloud use.
+
+- Licence: AGPL-3.0-only
+- URL: https://onlyoffice.com
+
+
+## sozi
+
+**Sozi** is presentation application (inspired by https://prezi.com).
+
+- License: MPL-2.0
+- URL: https://sozi.baierouge.fr
+
+## telegram
+
+**Telegram Desktop** is desktop client for the telegram messenger.
+
+- Licence: GPL
+- URL: https://telegram.org
+
+## typora
+
+**Typora** is a WYSIWYG markdown editor.
+
+- License: Proprietary
+- URL: https://typora.io/
+
+## walc
+
+**WALC** is a desktop client for the Whatsapp messenger.
+
+- License: GPL-3.0
+- URL: https://github.com/WAClient/WALC
+
+
+## write
+
+**Write** is word prozessor for handwriting and a collaborative whiteboard.
+
+- Licence: ????
+- URL: http://www.styluslabs.com/
+
+
+## xournalpp
+
+**Xournal++** is a application for handwritten notes and handwritten PDF annotation.
+
+- Licence: GPL
+- URL: https://xournalpp.github.io/
+
+---
+
+Note: All other packages are special packages and not suited for general use.
