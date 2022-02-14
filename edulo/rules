@@ -10,7 +10,10 @@ case "${command}" in
     upstream_dir=$1
     ln -fns "${upstream_dir}/usr/lib/edulo" /usr/lib/edulo
     ln -fns "${upstream_dir}/usr/bin/edulo" /usr/bin/edulo
+
+    sed -i "${upstream_dir}/usr/share/applications/edulo.desktop" -e "s@Icon=edulo@Icon=/usr/share/pixmaps/edulo.png@g"
     ln -fns "${upstream_dir}/usr/share/applications/edulo.desktop" /usr/share/applications/edulo.desktop
+
     ln -fns "${upstream_dir}/usr/share/lintian/overrides/edulo" /usr/share/lintian/overrides/edulo
     ln -fns "${upstream_dir}/usr/share/pixmaps/edulo.png" /usr/share/pixmaps/edulo.png
     
@@ -30,4 +33,4 @@ case "${command}" in
     ;;
   *)
     ;;
-esac
+esacs

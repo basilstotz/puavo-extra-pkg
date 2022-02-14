@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=EasyTaxBL 2021
+Comment=Steuern 2021 BL 
+Exec=/opt/EasyTax2021BL/EasyTax-Programm_2021_BL
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/easytax.png
+Categories=Office;
+Keywords=Steuer 2021
+

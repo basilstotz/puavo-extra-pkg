@@ -1,0 +1,43 @@
+#!/bin/sh
+
+set -eu
+
+
+
+command=$1
+shift
+
+
+
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+	
+        ln -fns "$upstream_dir/EasyTax2021BL" /opt/EasyTax2021BL
+        cp ./easytax.desktop /usr/share/applications/easytax.desktop
+        cp ./easytax.png /usr/share/pixmaps/easytax.png
+	;;
+    
+    unconfigure)
+	upstream_dir="$1"
+	
+        rm -f /opt/EasyTax2021BL
+        rm -f /usr/share/applications/easytax.desktop
+	rm -f /usr/share/pixmaps/easytax.png
+
+	
+	
+	;;
+    
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+	tar -x -z -f "${upstream_pack}" -C "${upstream_dir}" 
+
+	;;
+    
+    *)
+	;;
+esac

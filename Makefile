@@ -12,6 +12,16 @@ packagedirs += edulo
 packagedirs += sozi
 packagedirs += learningview
 packagedirs += telegram
+packagedirs += easytax
+packagedirs += xournalpp
+packagedirs += write
+packagedirs += joplin
+packagedirs += walc
+packagedirs += marktext
+packagedirs += typora
+
+
+
 
 
 packagefiles = $(patsubst %,%.tar.gz,${packagedirs})

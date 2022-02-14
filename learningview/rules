@@ -10,7 +10,10 @@ case "${command}" in
     upstream_dir=$1
     ln -fns "${upstream_dir}/usr/lib/learning-view" /usr/lib/learning-view
     ln -fns "${upstream_dir}/usr/bin/learning-view" /usr/bin/learning-view
+    
+    sed -i "${upstream_dir}/usr/share/applications/learning-view.desktop" -e "s@Icon=learning-view@Icon=/usr/share/pixmaps/learning-view.png@g"
     ln -fns "${upstream_dir}/usr/share/applications/learning-view.desktop" /usr/share/applications/learning-view.desktop
+    
     ln -fns "${upstream_dir}/usr/share/lintian/overrides/learning-view" /usr/share/lintian/overrides/learning-view
     ln -fns "${upstream_dir}/usr/share/pixmaps/learning-view.png" /usr/share/pixmaps/learning-view.png
     

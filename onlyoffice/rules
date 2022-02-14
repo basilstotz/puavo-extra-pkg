@@ -10,9 +10,13 @@ case "${command}" in
     upstream_dir=$1
     ln -fns "${upstream_dir}/opt/onlyoffice" /opt/onlyoffice
     ln -fns "${upstream_dir}/usr/bin/onlyoffice-desktopeditors" /usr/bin/onlyoffice-desktopeditors
+
+    # patch to make puavomenu happy
+    sed -i "${upstream_dir}/usr/share/applications/onlyoffice-desktopeditors.desktop" -e "s@Icon=onlyoffice-desktopeditors@Icon=/usr/share/pixmaps/onlyoffice-desktopeditors.png@g"
     ln -fns "${upstream_dir}/usr/share/applications/onlyoffice-desktopeditors.desktop" /usr/share/applications/onlyoffice-desktopeditors.desktop
+
     ln -fns "${upstream_dir}/usr/bin/onlyoffice-desktopeditors" /usr/bin/onlyoffice-desktopeditors
-    ln -fns "${upstream_dir}/opt/asc-de-48-png" /usr/share/pixmaps/onlyoffice-desktopeditors
+    ln -fns "${upstream_dir}/opt/onlyoffice/desktopeditors/asc-de-48.png" /usr/share/pixmaps/onlyoffice-desktopeditors.png
     
     ;;
   unconfigure)
@@ -20,7 +24,7 @@ case "${command}" in
           /usr/bin/onlyoffice-desktopeditors \
           /usr/share/applications/onlyoffice-desktop-editors.desktop \
           /usr/bin/desktopeditors \
-          /usr/share/pixmaps/onlyoffice-desktopeditors
+          /usr/share/pixmaps/onlyoffice-desktopeditors.png
     ;;
   unpack)
     upstream_pack=$1

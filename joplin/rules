@@ -1,0 +1,49 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "$upstream_dir/joplin" /opt/joplin
+    ln -fns "$upstream_dir/joplin/joplin.png" /usr/share/icons/joplin.png
+    cat <<EOF > /usr/share/applications/joplin.desktop
+[Desktop Entry]
+Name=Joplin - Notes
+Comment=Notizen verwalten (Evernote)
+Exec=joplin
+Icon=/usr/share/pixmaps/joplin.png
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Categories=Office;
+EOF
+    
+   cat <<EOF > /usr/local/bin/joplin
+#!/bin/sh
+/opt/joplin/Joplin.AppImage
+EOF
+   chmod +x /usr/local/bin/joplin
+    ;;
+  unconfigure)
+    rm -f /opt/joplin \
+          /usr/share/applications/joplin.desktop \
+          /usr/share/icons/joplin.png \
+	  /usr/local/bin/joplin
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    mkdir -p "$upstream_dir/joplin"
+    cp -p "$upstream_pack" "${upstream_dir}/joplin/Joplin.AppImage"
+    chmod 755 "${upstream_dir}/joplin/Joplin.AppImage"
+    cp -p joplin.png "$upstream_dir/joplin"
+    ;;
+  *)
+    ;;
+esac

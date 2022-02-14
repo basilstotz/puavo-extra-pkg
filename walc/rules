@@ -1,0 +1,52 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "$upstream_dir/walc" /opt/walc
+    ln -fns "$upstream_dir/walc/walc.png" /usr/share/icons/walc.png
+    cat <<EOF > /usr/share/applications/walc.desktop
+[Desktop Entry]
+Name=WALC
+Comment=Whatsapp-Client
+Exec=/usr/local/bin/walc
+Terminal=false
+Type=Application
+Icon=walc.png
+Categories=Application
+Keywords=System;Utility
+Name[de]=walc
+GenericName[de]=Whatsapp-Client
+Comment[de]=Whatsapp-Client
+EOF
+    
+   cat <<EOF > /usr/local/bin/walc
+#!/bin/sh
+/opt/walc/Walc.AppImage --no-sandbox
+EOF
+   chmod +x /usr/local/bin/walc
+    ;;
+  unconfigure)
+    rm -f /opt/walc \
+          /usr/share/applications/walc.desktop \
+          /usr/share/icons/walc.png \
+	  /usr/local/bin/walc
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    mkdir -p "$upstream_dir/walc"
+    cp -p "$upstream_pack" "${upstream_dir}/walc/Walc.AppImage"
+    chmod 755 "${upstream_dir}/walc/Walc.AppImage"
+    cp -p walc.png "$upstream_dir/walc"
+    ;;
+  *)
+    ;;
+esac

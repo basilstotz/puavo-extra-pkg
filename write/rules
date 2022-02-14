@@ -1,0 +1,44 @@
+#!/bin/sh
+
+set -eu
+
+
+
+command=$1
+shift
+
+
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+	
+        ln -fns "$upstream_dir/Write" /opt/Write
+        ln -fns "$upstream_dir/Write/Write144x144.png" /usr/share/pixmaps/Write144x144.png
+	ln -fns "$upstream_dir/Write/Write.desktop" /usr/share/applications/Write.desktop
+
+	;;
+    
+    unconfigure)
+	upstream_dir="$1"
+	
+        rm -f /opt/Write
+        rm -f /usr/share/pixmaps/Write144x144.png
+	rm -f /usr/share/applications/Write.desktop
+	
+	
+	;;
+    
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+	tar -x -z -f "${upstream_pack}" -C "${upstream_dir}" 
+
+	sed -i "${upstream_dir}/Write/Write.desktop" \
+	    -e "s@Icon=Write144x144@Icon=/usr/share/pixmaps/Write144x144.png@"
+	;;
+    
+    *)
+	;;
+esac

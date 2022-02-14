@@ -1,0 +1,53 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "$upstream_dir/marktext" /opt/marktext
+    ln -fns "$upstream_dir/marktext/marktext.png" /usr/share/icons/marktext.png
+    cat <<EOF > /usr/share/applications/marktext.desktop
+[Desktop Entry]
+Name=MarkText
+Comment=Simplistic Markdown Editor
+Exec=/usr/local/bin/marktext
+Terminal=false
+Type=Application
+Icon=marktext.png
+Categories=Application
+Keywords=Office
+Name[de]=marktext
+GenericName[de]=Markdown Editor
+Comment[de]=Simplistic Markdown Editor
+MimeType=text/markdown;text/x-rst;
+EOF
+    
+   cat <<EOF > /usr/local/bin/marktext
+#!/bin/sh
+/opt/marktext/marktext.AppImage --no-sandbox
+EOF
+   chmod +x /usr/local/bin/marktext
+    ;;
+  unconfigure)
+    rm -f /opt/marktext \
+          /usr/share/applications/marktext.desktop \
+          /usr/share/icons/marktext.png \
+	  /usr/local/bin/marktext
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    mkdir -p "$upstream_dir/marktext"
+    cp -p "$upstream_pack" "${upstream_dir}/marktext/marktext.AppImage"
+    chmod 755 "${upstream_dir}/marktext/marktext.AppImage"
+    cp -p marktext.png "$upstream_dir/marktext"
+    ;;
+  *)
+    ;;
+esac
