@@ -1,0 +1,46 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "$upstream_dir/zettlr" /opt/zettlr
+    ln -fns "$upstream_dir/zettlr/zettlr.png" /usr/share/icons/zettlr.png
+    cat <<EOF > /usr/share/applications/zettlr.desktop
+[Desktop Entry]
+Name=Zettlr
+Exec=/usr/local/bin/zettlr
+Type=Application
+Terminal=false
+Icon=/usr/share/icons/zettlr.png
+StartupNotify=true
+Categories=Education;Office
+EOF
+    cat <<EOF > /usr/local/bin/zettlr
+#!/bin/sh
+/opt/zettlr/zettlr.AppImage
+EOF
+    chmod +x /usr/local/bin/zettlr
+    ;;
+  unconfigure)
+    rm -f /opt/zettlr \
+          /usr/share/applications/zettlr.desktop \
+          /usr/share/icons/zettlr.png
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    mkdir -p "${upstream_dir}/zettlr"
+    cp -p "$upstream_pack" "${upstream_dir}/zettlr/zettlr.AppImage"
+    chmod 755 "${upstream_dir}/zettlr/zettlr.AppImage"
+    cp -p ./zettlr.png "$upstream_dir/zettlr/"
+    ;;
+  *)
+    ;;
+esac

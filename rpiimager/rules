@@ -1,0 +1,43 @@
+#!/bin/sh
+
+set -eu
+
+
+
+command=$1
+shift
+
+
+
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+	
+        ln -fns "$upstream_dir/usr/bin/rpi-imager" /usr/bin/rpi-imager
+	sed -i "$upstream_dir/usr/share/applications/rpi-imager.desktop" -e "s@Icon=rpi-imager@Icon=/usr/share/icons/hicolor/128x128/apps/rpi-imager.png@"
+        ln -fns "$upstream_dir/usr/share/applications/rpi-imager.desktop" /usr/share/applications/rpi-imager.desktop
+	mkdir -p /usr/share/icons/hicolor/128x128/apps/
+	ln -fns "$upstream_dir/usr/share/icons/hicolor/128x128/apps/rpi-imager.png" /usr/share/icons/hicolor/128x128/apps/rpi-imager.png
+	;;
+    
+    unconfigure)
+	upstream_dir="$1"
+
+	rm -f /usr/bin/rpi-imager
+	rm -f /usr/share/applications/rpi-imager.desktop
+	rm -f /usr/icons/hicolor/128x128/apps/rpi-imager.png
+	
+	;;
+    
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+
+	dpkg-deb -x "${upstream_pack}"  "${upstream_dir}" 
+
+	;;
+    
+    *)
+	;;
+esac

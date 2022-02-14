@@ -18,7 +18,9 @@ packagedirs += write
 packagedirs += joplin
 packagedirs += walc
 packagedirs += marktext
+packagedirs += rpiimager
 packagedirs += typora
+packagedirs += zettlr
 
 
 
