@@ -74,3 +74,6 @@
 - Licence: GPL
 - URL: https://xournalpp.github.io/
 
+---
+
+Note: All other packages are special packages and not suited for general use.
