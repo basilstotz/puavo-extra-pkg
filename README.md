@@ -5,7 +5,7 @@
 **Joplin** is a note-taking application. 
 
 - Licence: MIT
-- URL: https://joplin.org
+- URL: https://joplinapp.org
 
 ## lumi
 
