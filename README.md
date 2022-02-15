@@ -74,6 +74,15 @@
 - Licence: GPL
 - URL: https://xournalpp.github.io/
 
+## zettlr
+
+**Zettlr** is a markdown based knoledge base
+
+- Licence: GPL-3.0
+- URL: https://zettlr.com
+
+
+
 ---
 
 Note: All other packages are special packages and not suited for general use.
