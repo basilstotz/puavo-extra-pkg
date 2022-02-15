@@ -21,6 +21,9 @@ packagedirs += marktext
 packagedirs += rpiimager
 packagedirs += typora
 packagedirs += zettlr
+#packagedirs += zotero
+packagedirs += thymiosuite
+
 
 
 
