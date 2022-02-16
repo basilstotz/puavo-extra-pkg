@@ -7,44 +7,62 @@ set -eu
 command=$1
 shift
 
-desktop="app/org.mobsya.ThymioSuite/current/active/export/share/applications/org.mobsya.ThymioSuite.desktop"
+#desktop="app/org.mobsya.ThymioSuite/current/active/export/share/applications/org.mobsya.ThymioSuite.desktop"
 icon="app/org.mobsya.ThymioSuite/current/active/export/share/icons/hicolor/256x256/apps/org.mobsya.ThymioSuite.png"
 
-
+prefix="/opt/thymiosuite"
 
 case "${command}" in
     configure)
-	upstream_dir=$1
-        test -d /var/lib/flatpak && rm -r /var/lib/flatpak	
-        ln -fns "$upstream_dir/var/lib/flatpak" /var/lib/flatpak
+	upstream_dir=$1	
 
-	sed -i /var/lib/flatpak/$desktop -e "s@Icon=org.mobsya.ThymioSuite@Icon=/usr/share/icons/hicolor/256x256/apps/org.mobsya.ThymioSuite.png@"
-	sed -i /var/lib/flatpak/$desktop -e "s@Exec=.*@Exec=/var/lib/flatpak/exports/bin/org.mobsya.ThymioSuite@"
-	
-        ln -fns /var/lib/flatpak/$desktop /usr/share/applications/org.mobsya.ThymioSuite.desktop
-	ln -fns /var/lib/flatpak/$icon /usr/share/icons/hicolor/256x256/apps/org.mobsya.ThymioSuite.png
+        ln -fns "$upstream_dir/thymiosuite" $prefix
 
+	cat <<EOF > /usr/share/applications/org.mobsya.ThymioSuite.desktop
+[Desktop Entry]
+Type=Application
+Name=Thymio Suite
+GenericName=Thymio Suite
+GenericName[fr]=Thymio Suite
+GenericName[de]=Thymio Suite
+GenericName[it]=Suite Thymio
+GenericName[es]=Suite Thymio
+GenericName[pt]=Suite Thymio
+Exec=/usr/local/bin/thymiosuite
+Categories=Education;Science;
+Icon=$prefix/$icon
+X-Flatpak=org.mobsya.ThymioSuite
+EOF
 	cat <<'EOF' > /etc/udev/rules.d/99-mobsya.rules 
 SUBSYSTEM=="usb", ATTRS{idVendor}=="0617", ATTRS{idProduct}=="000a", MODE="0666"
 SUBSYSTEM=="usb", ATTRS{idVendor}=="0617", ATTRS{idProduct}=="000c", MODE="0666"
 EOF
-	cat <<'EOF' > /usr/local/bin/thymiosuite
-##!/bin/sh
-/var/lib/flatpak/exports/bin/org.mobsya.ThymioSuite
+	cat <<EOF > /usr/local/bin/thymiosuite
+#!/bin/sh
+$prefix/exports/bin/org.mobsya.ThymioSuite
 EOF
 	chmod +x /usr/local/bin/thymiosuite
+
+	mkdir -p /etc/flatpak/installations.d
+	cat <<EOF > /etc/flatpak/installations.d/thymiosuite.conf
+[Installation "thymiosuite"]
+Path=/opt/thymiosuite
+DisplayName=thymiosuite
+StorageType=harddisk
+EOF
 	;;
     
     unconfigure)
 	upstream_dir="$1"
 	
         rm -f /usr/share/applications/org.mobsya.ThymioSuite.desktop
-	rm -f /usr/share/icons/hicolor/256x256/apps/org.mobsya.ThymioSuite.png
-
-        rm -f /var/lib/flatpak
-
 	rm -f /etc/udev/rules.d/99-mobsya.rules
         rm -f /usr/local/bin/thymiosuite
+        rm -f /etc/flatpak/installations.d/thymiosuite.conf
+#	rm -f /usr/share/icons/hicolor/256x256/apps/org.mobsya.ThymioSuite.png
+
+        rm -f $prefix
+
 	;;
     
     unpack)

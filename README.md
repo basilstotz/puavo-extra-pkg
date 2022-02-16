@@ -44,6 +44,13 @@
 - Licence: GPL
 - URL: https://telegram.org
 
+## thymiosuite
+
+**Thymio Suite** is a IDE for the Thymio robot.
+
+- License: GPL
+- URL: https://thymio.org
+
 ## typora
 
 **Typora** is a WYSIWYG markdown editor.
