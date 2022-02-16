@@ -1,7 +1,6 @@
 #!/bin/sh
 
 
-mkdir -p /etc/flatpak/installations.d
 
 
 installations(){
@@ -12,13 +11,14 @@ installations(){
     inst=$(basename $1)
     
     mkdir -p $ort
+    mkdir -p /etc/flatpak/installations.d
     cat <<EOF > /etc/flatpak/installations.d/$inst.conf
 [Installation "$inst"]
 Path=$ort
 DisplayName=$inst
 StorageType=harddisk
 EOF
-    flatpak  --installation=$inst remote-add flathub https://flathub.org/repo/flathub.flatpakrepo
+    sudo flatpak  --installation=$inst remote-add flathub https://flathub.org/repo/flathub.flatpakrepo
     flatpak  --installation=$inst install flathub $app
 
     cp /etc/flatpak/installations.d/$inst.conf .
@@ -27,14 +27,15 @@ EOF
 
 
 if test -h /opt/thymoisuite; then
-    puavo-pkg remove thymiosuite
+    sudo puavo-pkg remove thymiosuite
 fi
 
 
-installations ./$inst org.mobsya.ThymioSuite
+installations ./thymiosuite org.mobsya.ThymioSuite
 
-tar -czf ./$inst.tgz ./$inst
-rm -r ./$inst
+
+tar -czf ./thymiosuite.tgz ./thymiosuite
+rm -r ./thymiosuite
 
 
 
