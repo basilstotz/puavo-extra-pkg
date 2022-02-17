@@ -1,41 +1,27 @@
 #!/bin/sh
 
 
+    inst="thymiosuite"    
+    app="org.mobsya.ThymioSuite"
 
-
-installations(){
+    test -d $inst && rm -r $inst
+    mkdir -p $inst
     
-    ort=$1
-    app=$2
-    
-    inst=$(basename $1)
-    
-    mkdir -p $ort
     mkdir -p /etc/flatpak/installations.d
     cat <<EOF > /etc/flatpak/installations.d/$inst.conf
 [Installation "$inst"]
-Path=$ort
+Path=$(pwd)/$inst
 DisplayName=$inst
 StorageType=harddisk
 EOF
-    sudo flatpak  --installation=$inst remote-add flathub https://flathub.org/repo/flathub.flatpakrepo
-    flatpak  --installation=$inst install flathub $app
 
-    cp /etc/flatpak/installations.d/$inst.conf .
+    flatpak  --installation=$inst --if-not-exists remote-add flathub https://flathub.org/repo/flathub.flatpakrepo
+    flatpak  --installation=$inst --assumeyes --noninteractive install flathub $app
+
     rm /etc/flatpak/installations.d/$inst.conf
-}
 
-
-if test -h /opt/thymoisuite; then
-    sudo puavo-pkg remove thymiosuite
-fi
-
-
-installations ./thymiosuite org.mobsya.ThymioSuite
-
-
-tar -czf ./thymiosuite.tgz ./thymiosuite
-rm -r ./thymiosuite
+    tar -czf $inst.tgz $inst
+#    rm -r $inst
 
 
 
