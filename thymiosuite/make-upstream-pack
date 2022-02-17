@@ -1,27 +1,34 @@
 #!/bin/sh
 
 
-    inst="thymiosuite"    
-    app="org.mobsya.ThymioSuite"
+inst="thymiosuite"    
+app="org.mobsya.ThymioSuite"
 
-    test -d $inst && rm -r $inst
-    mkdir -p $inst
-    
-    mkdir -p /etc/flatpak/installations.d
-    cat <<EOF > /etc/flatpak/installations.d/$inst.conf
-[Installation "$inst"]
+name="${inst}-tmp"
+
+test -d $inst && rm -r $inst
+mkdir -p $inst
+
+mkdir -p /etc/flatpak/installations.d
+cat <<EOF > /etc/flatpak/installations.d/$name.conf
+[Installation "$name"]
 Path=$(pwd)/$inst
-DisplayName=$inst
+DisplayName=$name
 StorageType=harddisk
 EOF
 
-    flatpak  --installation=$inst --if-not-exists remote-add flathub https://flathub.org/repo/flathub.flatpakrepo
-    flatpak  --installation=$inst --assumeyes --noninteractive install flathub $app
+flatpak  --installation=$name --if-not-exists remote-add flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak  --installation=$name --assumeyes --noninteractive install flathub $app
 
-    rm /etc/flatpak/installations.d/$inst.conf
+rm /etc/flatpak/installations.d/$name.conf
 
-    tar -czf $inst.tgz $inst
-#    rm -r $inst
+tar -czf $inst.tgz $inst
+
+chown --reference .. $inst.tgz
+rm -r $inst
+
+exit 0
+
 
 
 
