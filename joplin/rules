@@ -20,11 +20,13 @@ Icon=/usr/share/pixmaps/joplin.png
 Terminal=false
 X-MultipleArgs=false
 Type=Application
-Categories=Office;
+Categories=Office
+X-AppImage-Integrate=false
 EOF
     
    cat <<EOF > /usr/local/bin/joplin
 #!/bin/sh
+export APPIMAGELAUNCHER_DISABLE=true
 /opt/joplin/Joplin.AppImage
 EOF
    chmod +x /usr/local/bin/joplin

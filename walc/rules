@@ -24,11 +24,13 @@ Keywords=System;Utility
 Name[de]=walc
 GenericName[de]=Whatsapp-Client
 Comment[de]=Whatsapp-Client
+X-AppImage-Integrate=false
 EOF
     
    cat <<EOF > /usr/local/bin/walc
 #!/bin/sh
-/opt/walc/Walc.AppImage --no-sandbox
+export APPIMAGELAUNCHER_DISABLE=true
+/opt/walc/Walc.AppImage 
 EOF
    chmod +x /usr/local/bin/walc
     ;;

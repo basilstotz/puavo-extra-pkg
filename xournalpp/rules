@@ -14,14 +14,21 @@ case "$command" in
     cat <<EOF > /usr/share/applications/lumi.desktop
 [Desktop Entry]
 Name=Xournalpp
-Exec=/opt/xournalpp/xournalpp.AppImage
+Exec=xournalpp
 Type=Application
 Terminal=false
 Icon=/usr/share/icons/xournalpp.png
 StartupNotify=true
-
+X-AppImage-Integrate=false
 Categories=Education;
 EOF
+
+       cat <<EOF > /usr/local/bin/xournalpp
+#!/bin/sh
+export APPIMAGELAUNCHER_DISABLE=true
+/opt/xournalpp/xournalpp.AppImage                                                                            
+EOF
+   chmod +x /usr/local/bin/xournalpp
     ;;
   unconfigure)
     rm -f /opt/xournalpp \

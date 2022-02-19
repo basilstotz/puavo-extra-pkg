@@ -1,0 +1,50 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "$upstream_dir/handbrake" /opt/handbrake
+    ln -fns "$upstream_dir/handbrake/handbrake.png" /usr/share/pixmaps/handbrake.png
+    cat <<EOFF > /usr/share/applications/handbrake.desktop
+[Desktop Entry]
+Name=handbrake
+Comment=Whatsapp-Client
+Exec=/usr/local/bin/handbrake
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/handbrake.png
+Categories=Application
+Keywords=System;Utility
+Comment=handbrake
+EOFF
+    
+   cat <<EOFFF > /usr/local/bin/handbrake
+#!/bin/sh
+/opt/handbrake/handbrake.AppImage --no-sandbox
+EOFFF
+   chmod +x /usr/local/bin/handbrake
+    ;;
+  unconfigure)
+    rm -f /opt/handbrake \
+          /usr/share/applications/handbrake.desktop \
+          /usr/share/icons/handbrake.png \
+	  /usr/local/bin/handbrake
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    mkdir -p "$upstream_dir/handbrake"
+    cp -p "$upstream_pack" "${upstream_dir}/handbrake/handbrake.AppImage"
+    chmod 755 "${upstream_dir}/handbrake/handbrake.AppImage"
+    cp -p handbrake.png "$upstream_dir/handbrake"
+    ;;
+  *)
+    ;;
+esac

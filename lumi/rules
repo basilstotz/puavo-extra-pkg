@@ -14,14 +14,22 @@ case "$command" in
     cat <<EOF > /usr/share/applications/lumi.desktop
 [Desktop Entry]
 Name=Lumi H5P
-Exec=/opt/lumi/Lumi.AppImage
+Exec=lumi
 Type=Application
 Terminal=false
 Icon=/usr/share/icons/lumi.jpeg
 StartupNotify=true
-
-Categories=Education;
+Categories=Education
+X-AppImage-Integrate=false
 EOF
+
+   cat <<EOF > /usr/local/bin/lumi
+#!/bin/sh
+export APPIMAGELAUNCHER_DISABLE=true
+/opt/lumi/Lumi.AppImage
+EOF
+   chmod +x /usr/local/bin/lumi
+
     ;;
   unconfigure)
     rm -f /opt/lumi \

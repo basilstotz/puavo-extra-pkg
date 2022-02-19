@@ -25,11 +25,13 @@ Name[de]=marktext
 GenericName[de]=Markdown Editor
 Comment[de]=Simplistic Markdown Editor
 MimeType=text/markdown;text/x-rst;
+X-AppImage-Integrate=false
 EOF
     
    cat <<EOF > /usr/local/bin/marktext
 #!/bin/sh
-/opt/marktext/marktext.AppImage --no-sandbox
+export APPIMAGELAUNCHER_DISABLE=true
+/opt/marktext/marktext.AppImage 
 EOF
    chmod +x /usr/local/bin/marktext
     ;;

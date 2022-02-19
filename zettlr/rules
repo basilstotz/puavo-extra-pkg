@@ -20,9 +20,11 @@ Terminal=false
 Icon=/usr/share/icons/zettlr.png
 StartupNotify=true
 Categories=Education;Office
+X-AppImage-Integrate=false
 EOF
     cat <<EOF > /usr/local/bin/zettlr
 #!/bin/sh
+export APPIMAGELAUNCHER_DISABLE=true
 /opt/zettlr/zettlr.AppImage
 EOF
     chmod +x /usr/local/bin/zettlr

@@ -23,6 +23,7 @@ packagedirs += typora
 packagedirs += zettlr
 #packagedirs += zotero
 packagedirs += thymiosuite
+packagedirs += handbrake
 
 
 
