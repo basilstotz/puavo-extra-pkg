@@ -19,11 +19,14 @@ packagedirs += joplin
 packagedirs += walc
 packagedirs += marktext
 packagedirs += rpiimager
-packagedirs += typora
+#packagedirs += typora
 packagedirs += zettlr
 #packagedirs += zotero
 packagedirs += thymiosuite
 packagedirs += handbrake
+#packagedirs += cups-konicaminolta
+packagedirs += appimagelauncher
+
 
 
 
