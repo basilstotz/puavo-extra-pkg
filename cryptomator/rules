@@ -1,0 +1,57 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "$upstream_dir/cryptomator" /opt/cryptomator
+    ln -fns "$upstream_dir/cryptomator/cryptomator.png" /usr/share/pixmaps/cryptomator.png
+    cat <<EOFF > /usr/share/applications/cryptomator.desktop
+[Desktop Entry]
+Name=cryptomator
+Comment=cryptomator
+Exec=/usr/local/bin/cryptomator
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/cryptomator.png
+Categories=Application
+Keywords=System;Utility
+Comment=cryptomator
+X-AppImage-Integrate=false
+EOFF
+    
+   cat <<EOFFF > /usr/local/bin/cryptomator
+#!/bin/sh
+#https://github.com/TheAssassin/AppImageLauncher/issues/450 
+# set X-AppImage-Integrate=false in .desktop
+#https://github.com/TheAssassin/AppImageLauncher/issues/441
+export APPIMAGELAUNCHER_DISABLE=true
+/opt/cryptomator/cryptomator.AppImage
+EOFFF
+   chmod +x /usr/local/bin/cryptomator
+   ;;
+  
+  unconfigure)
+    rm -f /opt/cryptomator \
+          /usr/share/applications/cryptomator.desktop \
+          /usr/share/icons/cryptomator.png \
+	  /usr/local/bin/cryptomator
+    ;;
+  
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    mkdir -p "$upstream_dir/cryptomator"
+    cp -p "$upstream_pack" "${upstream_dir}/cryptomator/cryptomator.AppImage"
+    chmod 755 "${upstream_dir}/cryptomator/cryptomator.AppImage"
+    cp -p cryptomator.png "$upstream_dir/cryptomator"
+    ;;
+  *)
+    ;;
+esac

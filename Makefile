@@ -26,6 +26,8 @@ packagedirs += thymiosuite
 packagedirs += handbrake
 #packagedirs += cups-konicaminolta
 packagedirs += appimagelauncher
+packagedirs += cryptomator
+
 
 
 
