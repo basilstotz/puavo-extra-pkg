@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -eu
+
+
+
+command=$1
+shift
+
+
+case "${command}" in
+    configure)
+	upstream_dir=$1	
+
+        ln -fns "$upstream_dir/snapform" /opt/snapform
+	ln -fns "$upstream_dir/snapform/Snapform Viewer.desktop" /usr/share/applications/SnapformViewer.desktop
+	;;
+    
+    unconfigure)
+	upstream_dir="$1"
+        rm -f /opt/snapform
+	rm -f /usr/share/applications/SnapformViewer.desktop
+	;;
+    
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+	tar -x -z -f "${upstream_pack}" -C "${upstream_dir}" 
+	;;
+    
+    *)
+	;;
+esac
