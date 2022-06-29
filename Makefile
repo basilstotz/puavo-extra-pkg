@@ -27,6 +27,9 @@ packagedirs += handbrake
 #packagedirs += cups-konicaminolta
 packagedirs += appimagelauncher
 packagedirs += cryptomator
+packagedirs += snapform
+packagedirs += kmod-v4l2loopback
+
 
 
 
