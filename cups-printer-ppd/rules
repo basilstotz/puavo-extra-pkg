@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "$upstream_dir" /opt/cups-printer-ppd
+    cp -r /opt/cups-printer-ppd/usr/lib/* /usr/lib/
+    for N in $(ls /opt/cups-printer-ppd/usr/share/cups/model); do
+	ln -fns /opt/cups-printer-ppd/usr/share/cups/model/$N /usr/share/cups/model/$N
+    done
+    ;;
+  
+  unconfigure)
+    for N in $(ls /opt/cups-printer-ppd/usr/share/cups/model); do
+	rm -f /usr/share/cups/model/$N
+    done
+    rm -f /opt/cups-printer-ppd 
+    ;;
+  
+  
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    tar -x -z -f "$upstream_pack" -C "$upstream_dir"
+    ;;
+  
+  *)
+    ;;
+esac
