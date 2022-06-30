@@ -29,6 +29,8 @@ packagedirs += appimagelauncher
 packagedirs += cryptomator
 packagedirs += snapform
 packagedirs += kmod-v4l2loopback
+packagedirs += cups-printer-ppd
+
 
 
 
