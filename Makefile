@@ -25,11 +25,12 @@ packagedirs += zettlr
 packagedirs += thymiosuite
 packagedirs += handbrake
 #packagedirs += cups-konicaminolta
-packagedirs += appimagelauncher
+#packagedirs += appimagelauncher
 packagedirs += cryptomator
 packagedirs += snapform
 packagedirs += kmod-v4l2loopback
 packagedirs += cups-printer-ppd
+packagedirs += waydroid
 
 
 

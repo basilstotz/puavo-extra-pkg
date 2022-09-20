@@ -1,0 +1,33 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+    configure)
+	upstream_dir=$1
+	mkdir -p /var/lib/waydroid
+	mount --bind "$upstream_dir/waydroid" /var/lib/waydroid
+	#ln -fns "$upstream_dir/waydroid" /var/lib/waydroid
+	find /var/lib/waydroid -type d -exec chmod 777 \{\} \;
+	systemctl enable waydroid-container.service
+    ;;
+
+    unconfigure)
+	umount /var/lib/waydroid
+	rmdir /var/lib/waydroid
+        #rm -f /var/lib/waydroid
+    ;;
+
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+	tar -x -z -f "$upstream_pack" -C "$upstream_dir"
+    ;;
+
+    *)
+    ;;
+esac
+
