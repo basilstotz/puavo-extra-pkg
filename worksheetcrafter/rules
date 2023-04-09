@@ -1,0 +1,47 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "${command}" in
+    configure)
+	upstream_dir=$1
+
+	ln -fns "${upstream_dir}/worksheetcrafter" /opt/worksheetcrafter
+	ln -fns  "$(pwd)/worksheetcrafter.png" /usr/share/pixmaps/worksheetcrafter.png
+	
+	cat <<EOF > /usr/share/applications/worksheetcrafter.desktop
+[Desktop Entry]
+Terminal=false
+Exec=/usr/local/bin/worksheetcrafter
+Icon=/usr/share/pixmaps/worksheetcrafter.png
+Type=Application
+Categories=Office
+StartupNotify=false
+Name=WorksheetCrafter
+GenericName=WorksheetCrafter
+EOF
+
+	cat <<EOF > /usr/local/bin/worksheetcrafter
+#!/bin/sh
+wine /opt/worksheetcrafter/WorksheetCrafter.exe
+EOF
+	chmod +x /usr/local/bin/worksheetcrafter
+	;;
+    
+    unconfigure)
+	rm -rf /opt/worksheetcrafter 
+	rm /usr/share/applications/worksheetcrafter.desktop 
+	rm /usr/local/bin/worksheetcrafter	 
+	;;
+    unpack)
+	upstream_pack=$1
+	upstream_dir=$2
+        pwd
+	tar -x -z -f "${upstream_pack}" -C "${upstream_dir}" 
+	;;
+    *)
+	;;
+esac
