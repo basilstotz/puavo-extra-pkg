@@ -32,6 +32,8 @@ packagedirs += kmod-v4l2loopback
 packagedirs += cups-printer-ppd
 packagedirs += waydroid
 packagedirs += worksheetcrafter
+packagedirs += balenaetcher
+
 
 
 

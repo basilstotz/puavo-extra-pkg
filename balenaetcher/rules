@@ -1,0 +1,55 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    ln -fns "$upstream_dir/balenaetcher" /opt/balenaetcher
+    ln -fns "$upstream_dir/balenaetcher/balenaetcher.png" /usr/share/pixmaps/balenaetcher.png
+    cat <<EOFF > /usr/share/applications/balenaetcher.desktop
+[Desktop Entry]
+Name=balenaetcher
+Comment=balenaetcher
+Exec=/usr/local/bin/balenaetcher
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/balenaetcher.png
+Categories=Application
+Keywords=System;Utility
+Comment=balenaetcher
+X-AppImage-Integrate=false
+EOFF
+    
+   cat <<EOFFF > /usr/local/bin/balenaetcher
+#!/bin/sh
+#https://github.com/TheAssassin/AppImageLauncher/issues/450 
+# set X-AppImage-Integrate=false in .desktop
+#https://github.com/TheAssassin/AppImageLauncher/issues/441
+export APPIMAGELAUNCHER_DISABLE=true
+/opt/balenaetcher/balenaetcher.AppImage
+EOFFF
+   chmod +x /usr/local/bin/balenaetcher
+    ;;
+  unconfigure)
+    rm -f /opt/balenaetcher \
+          /usr/share/applications/balenaetcher.desktop \
+          /usr/share/icons/balenaetcher.png \
+	  /usr/local/bin/balenaetcher
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    mkdir -p "$upstream_dir/balenaetcher"
+    cp -p "$upstream_pack" "${upstream_dir}/balenaetcher/balenaetcher.AppImage"
+    chmod 755 "${upstream_dir}/balenaetcher/balenaetcher.AppImage"
+    cp -p balenaetcher.png "$upstream_dir/balenaetcher"
+    ;;
+  *)
+    ;;
+esac
