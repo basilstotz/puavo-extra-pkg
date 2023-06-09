@@ -13,7 +13,7 @@ case "$command" in
       test -d /opt/v4l2loopback && rm -r /opt/v4l2loopback
       test -f /usr/local/bin/v4l2loopback-ini && rm /usr/local/bin/v4l2loopback-ini
       
-      ln -fns $upstream_dir /opt/v4l2loopback
+      ln -fns "$upstream_dir" /opt/v4l2loopback
       
       cp /opt/v4l2loopback/v4l2loopback-ini /usr/local/bin/v4l2loopback-ini
       chmod a+s /usr/local/bin/v4l2loopback-ini
