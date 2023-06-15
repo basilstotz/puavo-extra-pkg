@@ -31,14 +31,7 @@ packagedirs += cups-printer-ppd
 packagedirs += waydroid
 packagedirs += worksheetcrafter
 packagedirs += balenaetcher
-
-
-
-
-
-
-
-
+packagedirs += teamviewer
 
 
 

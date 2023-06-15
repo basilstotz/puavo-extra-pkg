@@ -1,0 +1,54 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+case "$command" in
+  configure)
+    upstream_dir=$1
+
+    cp ./teamviewer_48.png /usr/share/pixmaps/.
+    
+    ln -fns "$upstream_dir/teamviewerqs" /opt/
+
+    cat <<EOF > /usr/share/applications/teamviewer.desktop
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Type=Application
+Categories=Network;
+Name=TeamViewer QuickSupport
+Comment=Remote control solution.
+Exec=/usr/local/bin/teamviewer
+Icon=/usr/share/pixmaps/teamviewer_48.png
+EOF
+    
+   cat <<'EOF' > /usr/local/bin/teamviewer
+#!/bin/sh
+if ! test -d $HOME/.config/teamviewerqs; then 
+   cp -r "$(realpath /opt/teamviewerqs)" "$HOME/.config/"
+fi
+cd "$HOME/.config/teamviewerqs" 
+./teamviewer
+EOF
+   
+   chmod +x /usr/local/bin/teamviewer
+    ;;
+  unconfigure)
+    rm -f /opt/teamviewer \
+          /usr/share/applications/teamviewer.desktop \
+	  /usr/local/bin/teamviewer
+    ;;
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+
+    tar -x -z -f "$upstream_pack" -C "$upstream_dir"
+    pwd
+    ls
+    ;;
+  *)
+    ;;
+esac
