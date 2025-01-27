@@ -12,10 +12,14 @@ case "${command}" in
 	ln -fns "${upstream_dir}" /opt/lehreroffice
 
 	if test -f /usr/lib/x86_64-linux-gnu/libssl.so.1.1; then
-            mv "/opt/lehreroffice/LehrerOffice Libs/libssl.so.1.1"  "/opt/lehreroffice/LehrerOffice Libs/libssl.so.1.1.off"
+	    if test -f "/opt/lehreroffice/LehrerOffice Libs/libssl.so.1.1"; then
+		mv "/opt/lehreroffice/LehrerOffice Libs/libssl.so.1.1"  "/opt/lehreroffice/LehrerOffice Libs/libssl.so.1.1.off" || true
+	    fi
 	fi
 	if test -f /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1; then
-	    mv "/opt/lehreroffice/LehrerOffice Libs/libcrypto.so.1.1" "/opt/lehreroffice/LehrerOffice Libs/libcrypto.so.1.1.off"
+	    if test -f "/opt/lehreroffice/LehrerOffice Libs/libcrypto.so.1.1"; then
+		mv "/opt/lehreroffice/LehrerOffice Libs/libcrypto.so.1.1" "/opt/lehreroffice/LehrerOffice Libs/libcrypto.so.1.1.off" || true
+	    fi
 	fi
 	
 	cat <<EOF > /usr/share/applications/lehreroffice.desktop

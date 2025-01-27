@@ -1,0 +1,50 @@
+#!/bin/sh
+
+set -eu
+
+command=$1
+shift
+
+
+case "$command" in
+  configure)
+      upstream_dir=$1
+      #to be removed later (when all 03-08-2022 images are gone)
+      test -d /opt/v4l2loopback && rm -r /opt/v4l2loopback
+      test -f /usr/local/bin/v4l2loopback-ini && rm /usr/local/bin/v4l2loopback-ini
+      
+      ln -fns "$upstream_dir" /opt/v4l2loopback
+      
+      cd /opt/v4l2loopback/v4l2loopback
+
+      make && make install && make install-utils
+      depmod -a
+      
+      #modprobe -r v4l2loopback
+      OPTS="devices=2 video_nr=10,11 exclusive_caps=1,1"
+      modprobe v4l2loopback $OPTS
+
+      ln -fns /opt/v4l2loopback/v4l2loopback/udev/60-persistent-v4l2loopback.rules /etc/udev/rules.d/60-persistent-v4l2loopback.rules
+
+    ;;
+  
+  unconfigure)
+      rm -f /etc/udev/rules.d/60-persistent-v4l2loopback.rules
+      rm -f /usr/local/bin/v4l2loopback-ini
+      rm -f /opt/v4l2loopback
+      ;;
+  
+  unpack)
+    upstream_pack=$1
+    upstream_dir=$2
+    unzip "$upstream_pack" -d "$upstream_dir"
+
+    cd "$upstream_dir"
+
+    mv v4l2loopback-* v4l2loopback
+
+    
+    ;;
+  *)
+    ;;
+esac
